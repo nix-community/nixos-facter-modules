@@ -1,9 +1,5 @@
 # nixos-facter-modules
 
-<!-- prettier-ignore -->
-> [!NOTE]
-> **Status: beta**
-
 A series of [NixOS modules] to be used in conjunction with [NixOS Facter].
 
 With a similar goal to [NixOS Hardware], these modules are designed around _fine-grained_ feature detection as opposed to system models.
