@@ -54,7 +54,8 @@
       text = ''
         nvd diff \
                 ${config.system.build.noFacter.config.system.build.toplevel} \
-                ${config.system.build.toplevel}
+                ${config.system.build.toplevel} \
+                "$@"
       '';
     };
 
@@ -64,7 +65,8 @@
       text = ''
         nix-diff \
                 ${config.system.build.noFacter.config.system.build.toplevel} \
-                ${config.system.build.toplevel}
+                ${config.system.build.toplevel} \
+                "$@"
       '';
     };
 

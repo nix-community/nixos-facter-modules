@@ -139,6 +139,11 @@ Removed packages:
 Closure size: 562 -> 581 (55 paths added, 36 paths removed, delta +19, disk usage +700.6MiB).
 ```
 
+!!! info "Arg pass through"
+
+    Any additional arguments you provide to `nix run` after `--` will be passed through to the `nvd diff` command.
+    For example `nix run .#nixosConfigurations.basic.config.facter.debug.nvd -- --help`.
+
 ### `nix-diff`
 
 You can output a [nix-diff] of the system closure with and without `nixos-facter` enabled by running
@@ -179,6 +184,11 @@ You can output a [nix-diff] of the system closure with and without `nixos-facter
   ...
   ...
 ```
+
+!!! info "Arg pass through"
+
+    Any additional arguments you provide to `nix run` after `--` will be passed through to the `nix-diff` command.
+    For example `nix run .#nixosConfigurations.basic.config.facter.debug.nix-diff -- --help`.
 
 [NixOS configuration]: https://nixos.org/manual/nixos/stable/#sec-configuration-syntax
 [detected architecture]: https://github.com/numtide/nixos-facter-modules/blob/main/modules/nixos/system.nix
