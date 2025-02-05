@@ -538,6 +538,17 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    NixOS Configuration
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -547,6 +558,58 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introspection-and-debugging" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introspection and debugging
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Introspection and debugging">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nvd" class="md-nav__link">
+    <span class="md-ellipsis">
+      nvd
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nix-diff" class="md-nav__link">
+    <span class="md-ellipsis">
+      nix-diff
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -579,6 +642,47 @@
   
     
   
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introspection-and-debugging" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introspection and debugging
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Introspection and debugging">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nvd" class="md-nav__link">
+    <span class="md-ellipsis">
+      nvd
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nix-diff" class="md-nav__link">
+    <span class="md-ellipsis">
+      nix-diff
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -731,6 +835,173 @@
 <p class="admonition-title">Roadmap</p>
 <p>We continue to add to and improve <a href="https://github.com/numtide/nixos-facter-modules">nixos-facter-modules</a>. Our eventual goal is to replace much if not all of the
 functionality currently provided by <a href="https://github.com/NixOS/nixos-hardware">nixos-hardware</a> and <a href="https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/installer/tools/nixos-generate-config.pl">nixos-generate-config</a>.</p>
+</div>
+<h2 id="introspection-and-debugging">Introspection and debugging</h2>
+<p>You might be asking yourself:</p>
+<blockquote>
+<p>This is cool and all that, but how do I know what changes <code>nixos-facter</code> will be making to my system closure???</p>
+</blockquote>
+<p>And you would be right to be concerned about just applying it without a way of understanding its impact.</p>
+<p>That is why we have added the following options for introspecting how <code>nixos-facter</code> is affecting a system closure.</p>
+<h3 id="nvd"><code>nvd</code></h3>
+<p>You can output a <a href="https://khumba.net/projects/nvd/">nvd diff</a> of the system closure with and without <code>nixos-facter</code> enabled by running
+<code>nix run .#nixosConfigurations.&lt;hostname&gt;.config.facter.debug.nvd</code>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-2-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-2-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-2-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-2-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-2-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-2-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-2-10">10</a></span>
+<span class="normal"><a href="#__codelineno-2-11">11</a></span>
+<span class="normal"><a href="#__codelineno-2-12">12</a></span>
+<span class="normal"><a href="#__codelineno-2-13">13</a></span>
+<span class="normal"><a href="#__codelineno-2-14">14</a></span>
+<span class="normal"><a href="#__codelineno-2-15">15</a></span>
+<span class="normal"><a href="#__codelineno-2-16">16</a></span>
+<span class="normal"><a href="#__codelineno-2-17">17</a></span>
+<span class="normal"><a href="#__codelineno-2-18">18</a></span>
+<span class="normal"><a href="#__codelineno-2-19">19</a></span>
+<span class="normal"><a href="#__codelineno-2-20">20</a></span>
+<span class="normal"><a href="#__codelineno-2-21">21</a></span>
+<span class="normal"><a href="#__codelineno-2-22">22</a></span>
+<span class="normal"><a href="#__codelineno-2-23">23</a></span>
+<span class="normal"><a href="#__codelineno-2-24">24</a></span>
+<span class="normal"><a href="#__codelineno-2-25">25</a></span>
+<span class="normal"><a href="#__codelineno-2-26">26</a></span>
+<span class="normal"><a href="#__codelineno-2-27">27</a></span>
+<span class="normal"><a href="#__codelineno-2-28">28</a></span>
+<span class="normal"><a href="#__codelineno-2-29">29</a></span>
+<span class="normal"><a href="#__codelineno-2-30">30</a></span>
+<span class="normal"><a href="#__codelineno-2-31">31</a></span>
+<span class="normal"><a href="#__codelineno-2-32">32</a></span>
+<span class="normal"><a href="#__codelineno-2-33">33</a></span>
+<span class="normal"><a href="#__codelineno-2-34">34</a></span>
+<span class="normal"><a href="#__codelineno-2-35">35</a></span>
+<span class="normal"><a href="#__codelineno-2-36">36</a></span>
+<span class="normal"><a href="#__codelineno-2-37">37</a></span>
+<span class="normal"><a href="#__codelineno-2-38">38</a></span>
+<span class="normal"><a href="#__codelineno-2-39">39</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>❯<span class="w"> </span>nix<span class="w"> </span>run<span class="w"> </span>.#nixosConfigurations.basic.config.facter.debug.nvd
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="o">&lt;&lt;&lt;</span><span class="w"> </span>/nix/store/fqbia5p8hfnyzxipfjmzxn8v3b69mjvs-nixos-system-nixos-24.11.20240831.12228ff
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a>&gt;&gt;&gt;<span class="w"> </span>/nix/store/ijkh9sq03y72pfrjvncrsrhwh7g6k8q0-nixos-system-nixos-24.11.20240831.12228ff
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a>Added<span class="w"> </span>packages:
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="o">[</span>A.<span class="o">]</span><span class="w">  </span><span class="c1">#01  X-Reload-Triggers-systemd-networkd         &lt;none&gt;</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="o">[</span>A.<span class="o">]</span><span class="w">  </span><span class="c1">#02  X-Restart-Triggers-systemd-networkd        &lt;none&gt;</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="o">[</span>A.<span class="o">]</span><span class="w">  </span><span class="c1">#03  X-Restart-Triggers-systemd-resolved        &lt;none&gt;</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="o">[</span>A.<span class="o">]</span><span class="w">  </span><span class="c1">#04  etc-systemd-networkd.conf                  &lt;none&gt;</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="o">[</span>A.<span class="o">]</span><span class="w">  </span><span class="c1">#05  etc-systemd-resolved.conf                  &lt;none&gt;</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10"></a><span class="o">[</span>A.<span class="o">]</span><span class="w">  </span><span class="c1">#06  graphics-driver.conf                       &lt;none&gt;</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11"></a><span class="o">[</span>A.<span class="o">]</span><span class="w">  </span><span class="c1">#07  graphics-drivers                           &lt;none&gt;</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12"></a><span class="o">[</span>A.<span class="o">]</span><span class="w">  </span><span class="c1">#08  hwdata                                     0.385</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13"></a><span class="o">[</span>A.<span class="o">]</span><span class="w">  </span><span class="c1">#09  libXfixes                                  6.0.1</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14"></a><span class="o">[</span>A.<span class="o">]</span><span class="w">  </span><span class="c1">#10  libXxf86vm                                 1.1.5</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15"></a><span class="o">[</span>A.<span class="o">]</span><span class="w">  </span><span class="c1">#11  libdrm                                     2.4.122</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16"></a><span class="o">[</span>A.<span class="o">]</span><span class="w">  </span><span class="c1">#12  libpciaccess                               0.18.1</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17"></a><span class="o">[</span>A.<span class="o">]</span><span class="w">  </span><span class="c1">#13  libxshmfence                               1.3.2</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18"></a><span class="o">[</span>A.<span class="o">]</span><span class="w">  </span><span class="c1">#14  llvm                                       18.1.8-lib</span>
+<a id="__codelineno-2-19" name="__codelineno-2-19"></a><span class="o">[</span>A.<span class="o">]</span><span class="w">  </span><span class="c1">#15  lm-sensors                                 3.6.0</span>
+<a id="__codelineno-2-20" name="__codelineno-2-20"></a><span class="o">[</span>A.<span class="o">]</span><span class="w">  </span><span class="c1">#16  mesa                                       24.2.1, 24.2.1-drivers</span>
+<a id="__codelineno-2-21" name="__codelineno-2-21"></a><span class="o">[</span>A.<span class="o">]</span><span class="w">  </span><span class="c1">#17  unit                                       99-ethernet-default-dhcp.network, 99-wireless-client-dhcp.network</span>
+<a id="__codelineno-2-22" name="__codelineno-2-22"></a><span class="o">[</span>A.<span class="o">]</span><span class="w">  </span><span class="c1">#18  unit-systemd-network-wait-online-.service  &lt;none&gt;</span>
+<a id="__codelineno-2-23" name="__codelineno-2-23"></a><span class="o">[</span>A.<span class="o">]</span><span class="w">  </span><span class="c1">#19  unit-systemd-networkd-wait-online.service  &lt;none&gt;</span>
+<a id="__codelineno-2-24" name="__codelineno-2-24"></a><span class="o">[</span>A.<span class="o">]</span><span class="w">  </span><span class="c1">#20  unit-systemd-networkd.service              &lt;none&gt;</span>
+<a id="__codelineno-2-25" name="__codelineno-2-25"></a><span class="o">[</span>A.<span class="o">]</span><span class="w">  </span><span class="c1">#21  unit-systemd-networkd.socket               &lt;none&gt;</span>
+<a id="__codelineno-2-26" name="__codelineno-2-26"></a><span class="o">[</span>A.<span class="o">]</span><span class="w">  </span><span class="c1">#22  unit-systemd-resolved.service              &lt;none&gt;</span>
+<a id="__codelineno-2-27" name="__codelineno-2-27"></a><span class="o">[</span>A.<span class="o">]</span><span class="w">  </span><span class="c1">#23  vulkan-loader                              1.3.283.0</span>
+<a id="__codelineno-2-28" name="__codelineno-2-28"></a><span class="o">[</span>A.<span class="o">]</span><span class="w">  </span><span class="c1">#24  wayland                                    1.23.0</span>
+<a id="__codelineno-2-29" name="__codelineno-2-29"></a><span class="o">[</span>A.<span class="o">]</span><span class="w">  </span><span class="c1">#25  xcb-util-keysyms                           0.4.1</span>
+<a id="__codelineno-2-30" name="__codelineno-2-30"></a>Removed<span class="w"> </span>packages:
+<a id="__codelineno-2-31" name="__codelineno-2-31"></a><span class="o">[</span>R.<span class="o">]</span><span class="w">  </span><span class="c1">#1  X-Restart-Triggers-resolvconf    &lt;none&gt;</span>
+<a id="__codelineno-2-32" name="__codelineno-2-32"></a><span class="o">[</span>R-<span class="o">]</span><span class="w">  </span><span class="c1">#2  dhcpcd                           10.0.6</span>
+<a id="__codelineno-2-33" name="__codelineno-2-33"></a><span class="o">[</span>R.<span class="o">]</span><span class="w">  </span><span class="c1">#3  dhcpcd.conf                      &lt;none&gt;</span>
+<a id="__codelineno-2-34" name="__codelineno-2-34"></a><span class="o">[</span>R-<span class="o">]</span><span class="w">  </span><span class="c1">#4  openresolv                       3.13.2</span>
+<a id="__codelineno-2-35" name="__codelineno-2-35"></a><span class="o">[</span>R.<span class="o">]</span><span class="w">  </span><span class="c1">#5  unit-dhcpcd.service              &lt;none&gt;</span>
+<a id="__codelineno-2-36" name="__codelineno-2-36"></a><span class="o">[</span>R.<span class="o">]</span><span class="w">  </span><span class="c1">#6  unit-network-setup.service       &lt;none&gt;</span>
+<a id="__codelineno-2-37" name="__codelineno-2-37"></a><span class="o">[</span>R.<span class="o">]</span><span class="w">  </span><span class="c1">#7  unit-resolvconf.service          &lt;none&gt;</span>
+<a id="__codelineno-2-38" name="__codelineno-2-38"></a><span class="o">[</span>R.<span class="o">]</span><span class="w">  </span><span class="c1">#8  unit-script-network-setup-start  &lt;none&gt;</span>
+<a id="__codelineno-2-39" name="__codelineno-2-39"></a>Closure<span class="w"> </span>size:<span class="w"> </span><span class="m">562</span><span class="w"> </span>-&gt;<span class="w"> </span><span class="m">581</span><span class="w"> </span><span class="o">(</span><span class="m">55</span><span class="w"> </span>paths<span class="w"> </span>added,<span class="w"> </span><span class="m">36</span><span class="w"> </span>paths<span class="w"> </span>removed,<span class="w"> </span>delta<span class="w"> </span>+19,<span class="w"> </span>disk<span class="w"> </span>usage<span class="w"> </span>+700.6MiB<span class="o">)</span>.
+</code></pre></div></td></tr></table></div>
+<div class="admonition info">
+<p class="admonition-title">Arg pass through</p>
+<p>Any additional arguments you provide to <code>nix run</code> after <code>--</code> will be passed through to the <code>nvd diff</code> command.
+For example <code>nix run .#nixosConfigurations.basic.config.facter.debug.nvd -- --help</code>.</p>
+</div>
+<h3 id="nix-diff"><code>nix-diff</code></h3>
+<p>You can output a <a href="https://github.com/Gabriella439/nix-diff">nix-diff</a> of the system closure with and without <code>nixos-facter</code> enabled by running
+<code>nix run .#nixosConfigurations.&lt;hostname&gt;.config.facter.debug.nix-diff</code>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-3-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-3-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-3-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-3-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-3-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-3-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-3-10">10</a></span>
+<span class="normal"><a href="#__codelineno-3-11">11</a></span>
+<span class="normal"><a href="#__codelineno-3-12">12</a></span>
+<span class="normal"><a href="#__codelineno-3-13">13</a></span>
+<span class="normal"><a href="#__codelineno-3-14">14</a></span>
+<span class="normal"><a href="#__codelineno-3-15">15</a></span>
+<span class="normal"><a href="#__codelineno-3-16">16</a></span>
+<span class="normal"><a href="#__codelineno-3-17">17</a></span>
+<span class="normal"><a href="#__codelineno-3-18">18</a></span>
+<span class="normal"><a href="#__codelineno-3-19">19</a></span>
+<span class="normal"><a href="#__codelineno-3-20">20</a></span>
+<span class="normal"><a href="#__codelineno-3-21">21</a></span>
+<span class="normal"><a href="#__codelineno-3-22">22</a></span>
+<span class="normal"><a href="#__codelineno-3-23">23</a></span>
+<span class="normal"><a href="#__codelineno-3-24">24</a></span>
+<span class="normal"><a href="#__codelineno-3-25">25</a></span>
+<span class="normal"><a href="#__codelineno-3-26">26</a></span>
+<span class="normal"><a href="#__codelineno-3-27">27</a></span>
+<span class="normal"><a href="#__codelineno-3-28">28</a></span>
+<span class="normal"><a href="#__codelineno-3-29">29</a></span>
+<span class="normal"><a href="#__codelineno-3-30">30</a></span>
+<span class="normal"><a href="#__codelineno-3-31">31</a></span>
+<span class="normal"><a href="#__codelineno-3-32">32</a></span>
+<span class="normal"><a href="#__codelineno-3-33">33</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>❯<span class="w"> </span>nix<span class="w"> </span>run<span class="w"> </span>.#nixosConfigurations.basic.config.facter.debug.nix-diff
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a>-<span class="w"> </span>/nix/store/fqbia5p8hfnyzxipfjmzxn8v3b69mjvs-nixos-system-nixos-24.11.20240831.12228ff:<span class="o">{</span>out<span class="o">}</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a>+<span class="w"> </span>/nix/store/ijkh9sq03y72pfrjvncrsrhwh7g6k8q0-nixos-system-nixos-24.11.20240831.12228ff:<span class="o">{</span>out<span class="o">}</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a>•<span class="w"> </span>The<span class="w"> </span>input<span class="w"> </span>derivation<span class="w"> </span>named<span class="w"> </span><span class="sb">`</span>boot.json<span class="sb">`</span><span class="w"> </span>differs
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="w">  </span>-<span class="w"> </span>/nix/store/zcmdy29f5di6rrfkkld3x773q1d7c1bv-boot.json.drv:<span class="o">{</span>out<span class="o">}</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="w">  </span>+<span class="w"> </span>/nix/store/j0wxsmw6fxgzd59pdcljkpq430jbk8jn-boot.json.drv:<span class="o">{</span>out<span class="o">}</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="w">  </span>•<span class="w"> </span>The<span class="w"> </span>input<span class="w"> </span>derivation<span class="w"> </span>named<span class="w"> </span><span class="sb">`</span>initrd-linux-6.6.48<span class="sb">`</span><span class="w"> </span>differs
+<a id="__codelineno-3-8" name="__codelineno-3-8"></a><span class="w">    </span>-<span class="w"> </span>/nix/store/3z3jgifv3rj5wrh4cx23gzc9hlrwrxwj-initrd-linux-6.6.48.drv:<span class="o">{</span>out<span class="o">}</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="w">    </span>+<span class="w"> </span>/nix/store/ds7pcp97k33p93z460b5vzrii02jjkcf-initrd-linux-6.6.48.drv:<span class="o">{</span>out<span class="o">}</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10"></a><span class="w">    </span>•<span class="w"> </span>The<span class="w"> </span>input<span class="w"> </span>derivation<span class="w"> </span>named<span class="w"> </span><span class="sb">`</span>initrd-nixos.conf<span class="sb">`</span><span class="w"> </span>differs
+<a id="__codelineno-3-11" name="__codelineno-3-11"></a><span class="w">      </span>-<span class="w"> </span>/nix/store/y458hw08d5hv2bcf295fv9wvbsfvprrq-initrd-nixos.conf.drv:<span class="o">{</span>out<span class="o">}</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12"></a><span class="w">      </span>+<span class="w"> </span>/nix/store/989v278ws16mnvlx6fwsa925vgx9a0ia-initrd-nixos.conf.drv:<span class="o">{</span>out<span class="o">}</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13"></a><span class="w">      </span>•<span class="w"> </span>The<span class="w"> </span>environments<span class="w"> </span><span class="k">do</span><span class="w"> </span>not<span class="w"> </span>match:
+<a id="__codelineno-3-14" name="__codelineno-3-14"></a><span class="w">          </span><span class="nv">text</span><span class="o">=</span><span class="s1">&#39;&#39;</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15"></a><span class="w">          </span>virtio_balloon
+<a id="__codelineno-3-16" name="__codelineno-3-16"></a><span class="w">          </span>virtio_console
+<a id="__codelineno-3-17" name="__codelineno-3-17"></a><span class="w">          </span>virtio_rng
+<a id="__codelineno-3-18" name="__codelineno-3-18"></a><span class="w">          </span>virtio_gpu
+<a id="__codelineno-3-19" name="__codelineno-3-19"></a><span class="w">          </span>bochs
+<a id="__codelineno-3-20" name="__codelineno-3-20"></a><span class="w">          </span>dm_mod
+<a id="__codelineno-3-21" name="__codelineno-3-21"></a><span class="w">      </span><span class="s1">&#39;&#39;</span>
+<a id="__codelineno-3-22" name="__codelineno-3-22"></a><span class="w">    </span>•<span class="w"> </span>The<span class="w"> </span>input<span class="w"> </span>derivation<span class="w"> </span>named<span class="w"> </span><span class="sb">`</span>linux-6.6.48-modules-shrunk<span class="sb">`</span><span class="w"> </span>differs
+<a id="__codelineno-3-23" name="__codelineno-3-23"></a><span class="w">      </span>-<span class="w"> </span>/nix/store/dk2xshi6hr85wjyia60nizahl2rq31sz-linux-6.6.48-modules-shrunk.drv:<span class="o">{</span>out<span class="o">}</span>
+<a id="__codelineno-3-24" name="__codelineno-3-24"></a><span class="w">      </span>+<span class="w"> </span>/nix/store/xxk67p9wy7hxq33gd1mfz5dqcsm2mhsr-linux-6.6.48-modules-shrunk.drv:<span class="o">{</span>out<span class="o">}</span>
+<a id="__codelineno-3-25" name="__codelineno-3-25"></a><span class="w">      </span>•<span class="w"> </span>The<span class="w"> </span>environments<span class="w"> </span><span class="k">do</span><span class="w"> </span>not<span class="w"> </span>match:
+<a id="__codelineno-3-26" name="__codelineno-3-26"></a><span class="w">          </span><span class="nv">rootModules</span><span class="o">=</span><span class="s1">&#39;&#39;</span>
+<a id="__codelineno-3-27" name="__codelineno-3-27"></a><span class="w">          </span>virtio_net<span class="w"> </span>virtio_pci<span class="w"> </span>virtio_mmio<span class="w"> </span>virtio_blk<span class="w"> </span>9p<span class="w"> </span>9pnet_virtio<span class="w"> </span>uhci_hcd<span class="w"> </span>ata_piix<span class="w"> </span>floppy<span class="w"> </span>virtio_blk<span class="w"> </span>virtio_pci<span class="w"> </span>ext2<span class="w"> </span>ext4<span class="w"> </span>autofs<span class="w"> </span>tpm-tis<span class="w"> </span>tpm-crb<span class="w"> </span>efivarfs<span class="w"> </span>ahci<span class="w"> </span>sata_nv<span class="w"> </span>sata_via<span class="w"> </span>sata_sis<span class="w"> </span>sata_uli<span class="w"> </span>ata_piix<span class="w"> </span>pata_marvell<span class="w"> </span>nvme<span class="w"> </span>sd_mod<span class="w"> </span>sr_mod<span class="w"> </span>mmc_block<span class="w"> </span>uhci_hcd<span class="w"> </span>ehci_hcd<span class="w"> </span>ehci_pci<span class="w"> </span>ohci_hcd<span class="w"> </span>ohci_pci<span class="w"> </span>xhci_hcd<span class="w"> </span>xhci_pci<span class="w"> </span>usbhid<span class="w"> </span>hid_generic<span class="w"> </span>hid_lenovo<span class="w"> </span>hid_apple<span class="w"> </span>hid_roccat<span class="w"> </span>hid_logitech_hidpp<span class="w"> </span>hid_logitech_dj<span class="w"> </span>hid_microsoft<span class="w"> </span>hid_cherry<span class="w"> </span>hid_corsair<span class="w"> </span>pcips2<span class="w"> </span>atkbd<span class="w"> </span>i8042<span class="w"> </span>rtc_cmos<span class="w"> </span>virtio_balloon<span class="w"> </span>virtio_console<span class="w"> </span>virtio_rng<span class="w"> </span>virtio_gpu<span class="w"> </span>bochs<span class="w"> </span>dm_mod
+<a id="__codelineno-3-28" name="__codelineno-3-28"></a><span class="w">      </span><span class="s1">&#39;&#39;</span>
+<a id="__codelineno-3-29" name="__codelineno-3-29"></a><span class="w">    </span>•<span class="w"> </span>Skipping<span class="w"> </span>environment<span class="w"> </span>comparison
+<a id="__codelineno-3-30" name="__codelineno-3-30"></a><span class="w">  </span>•<span class="w"> </span>Skipping<span class="w"> </span>environment<span class="w"> </span>comparison
+<a id="__codelineno-3-31" name="__codelineno-3-31"></a><span class="w">  </span>...
+<a id="__codelineno-3-32" name="__codelineno-3-32"></a><span class="w">  </span>...
+<a id="__codelineno-3-33" name="__codelineno-3-33"></a><span class="w">  </span>...
+</code></pre></div></td></tr></table></div>
+<div class="admonition info">
+<p class="admonition-title">Arg pass through</p>
+<p>Any additional arguments you provide to <code>nix run</code> after <code>--</code> will be passed through to the <code>nix-diff</code> command.
+For example <code>nix run .#nixosConfigurations.basic.config.facter.debug.nix-diff -- --help</code>.</p>
 </div>
 
 
