@@ -16,7 +16,7 @@ For more information, see the [docs].
 
 ## Getting started
 
-To generate a hardware report run the following:
+To generate a hardware report, run the following:
 
 ```console
 $ nix --extra-experimental-features "flakes nix-command" run github:numtide/nixos-facter > facter.json

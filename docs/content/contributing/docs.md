@@ -2,7 +2,8 @@
 
 There is a separate [devshell] called `docs` which is provided for working with the docs locally.
 
-It can be entered by running: `nix develop .#docs`
+It can be entered by running `nix develop .#docs` or `cd`'ing into `docs` and letting [Direnv] load it for you
+automatically.
 
 ```nix title="nix/devshells/docs.nix"
 --8<-- "docs.nix"
