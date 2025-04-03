@@ -16,6 +16,7 @@ in
         ++ (report.hardware.storage_controller or [ ])
       )
     );
+    defaultText = "hardware dependent";
     description = ''
       List of kernel modules that are needed to access the disk.
     '';

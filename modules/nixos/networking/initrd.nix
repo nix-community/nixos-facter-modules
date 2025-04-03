@@ -10,6 +10,7 @@ in
     default = facterLib.stringSet (
       facterLib.collectDrivers (report.hardware.network_controller or [ ])
     );
+    defaultText = "hardware dependent";
     description = ''
       List of kernel modules to include in the initrd to support networking.
     '';
