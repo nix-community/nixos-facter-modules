@@ -9,6 +9,7 @@ in
       default = builtins.elem "amdgpu" (
         facterLib.collectDrivers (config.facter.report.hardware.graphics_card or [ ])
       );
+      defaultText = "hardware dependent";
     };
   };
   config = lib.mkIf cfg.enable {

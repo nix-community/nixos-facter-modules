@@ -25,6 +25,7 @@
           { }
         else
           builtins.fromJSON (builtins.readFile config.facter.reportPath);
+      defaultText = "A JSON import from config.facter.reportPath (if not null), {} otherwise.";
       description = "An import for the reportPath.";
     };
 
