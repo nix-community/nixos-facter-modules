@@ -39,6 +39,7 @@ in
       isSupported (config.facter.report.hardware.unknown or [ ])
       || isSupported (config.facter.report.hardware.fingerprint or [ ])
       || isSupported (config.facter.report.hardware.usb or [ ]);
+    defaultText = "hardware dependent";
   };
 
   config.services.fprintd.enable = lib.mkIf config.facter.detected.fingerprint.enable (
