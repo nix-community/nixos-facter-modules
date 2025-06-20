@@ -10,7 +10,7 @@ By default, these modules enable or disable themselves based on detected hardwar
 For more information, see the [docs].
 
 [NixOS modules]: https://wiki.nixos.org/wiki/NixOS_modules
-[NixOS Facter]: https://github.com/numtide/nixos-facter
+[NixOS Facter]: https://github.com/nix-community/nixos-facter
 [NixOS Hardware]: https://github.com/NixOS/nixos-hardware
 [docs]: https://nix-community.github.io/nixos-facter-modules/
 
@@ -19,7 +19,7 @@ For more information, see the [docs].
 To generate a hardware report run the following:
 
 ```console
-$ nix --extra-experimental-features "flakes nix-command" run github:numtide/nixos-facter > facter.json
+$ nix --extra-experimental-features "flakes nix-command" run github:nix-community/nixos-facter > facter.json
 ```
 
 Then use the generated `facter.json` with the NixOS module as follows:
@@ -35,7 +35,7 @@ that part of the configuration yourself or take it from `nixos-generate-config`.
 {
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixos-facter-modules.url = "github:numtide/nixos-facter-modules";
+    nixos-facter-modules.url = "github:nix-community/nixos-facter-modules";
   };
 
   outputs =
@@ -70,7 +70,7 @@ that part of the configuration yourself or take it from `nixos-generate-config`.
 {
   imports = [
     "${
-      (builtins.fetchTarball { url = "https://github.com/numtide/nixos-facter-modules/"; })
+      (builtins.fetchTarball { url = "https://github.com/nix-community/nixos-facter-modules/"; })
     }/modules/nixos/facter.nix"
   ];
 
