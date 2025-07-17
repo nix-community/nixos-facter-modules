@@ -19,7 +19,7 @@
 
   options.facter = with lib; {
     report = mkOption {
-      type = types.raw;
+      type = types.attrsOf types.anything;
       default =
         if config.facter.reportPath == null then
           { }
