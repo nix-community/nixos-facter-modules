@@ -12,6 +12,6 @@
   };
   config = lib.mkIf config.facter.detected.dhcp.enable {
     networking.useDHCP = lib.mkDefault true;
-    networking.useNetworkd = lib.mkDefault true;
+    networking.useNetworkd = lib.mkDefault (!config.networking.networkmanager.enable);
   };
 }
