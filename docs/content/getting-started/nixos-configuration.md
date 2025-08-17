@@ -75,7 +75,7 @@ The NixOS Facter module will attempt to do the following:
 -   Enable a variety of kernel modules and NixOS options related to VM and bare-metal environments based on the [detected virtualisation].
 -   Enable CPU microcode updates based on the [detected CPU(s)].
 -   Ensure a variety of kernel modules are made available at boot time based on the [detected (usb|firewire|storage) controllers and disks].
--   Enable a variety of kernel modules based on the [detected Broadcom and Intel WiFi devices].
+-   Enable a variety of kernel modules based on the [detected Intel WiFi devices].
 
 !!! info "Roadmap"
 
@@ -195,7 +195,7 @@ You can output a [nix-diff] of the system closure with and without `nixos-facter
 [detected virtualisation]: https://github.com/numtide/nixos-facter-modules/blob/main/modules/nixos/virtualisation.nix
 [detected CPU(s)]: https://github.com/numtide/nixos-facter-modules/blob/main/modules/nixos/firmware.nix
 [detected (usb|firewire|storage) controllers and disks]: (https://github.com/numtide/nixos-facter-modules/blob/main/modules/nixos/boot.nix)
-[detected Broadcom and Intel WiFi devices]: https://github.com/numtide/nixos-facter-modules/blob/main/modules/nixos/networking
+[detected Intel WiFi devices]: https://github.com/numtide/nixos-facter-modules/blob/main/modules/nixos/networking
 [nixos-facter-modules]: https://github.com/numtide/nixos-facter-modules
 [nixos-hardware]: https://github.com/NixOS/nixos-hardware
 [nixos-generate-config]: https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/installer/tools/nixos-generate-config.pl
