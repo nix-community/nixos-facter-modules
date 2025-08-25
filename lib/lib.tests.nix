@@ -45,4 +45,23 @@ facterLib: with facterLib; {
       true
     ];
   };
+
+  testToZeroPaddedHex = {
+    expr = map toZeroPaddedHex [
+      0
+      1
+      16
+      256
+      4096
+      65536
+    ];
+    expected = [
+      "0000"
+      "0001"
+      "0010"
+      "0100"
+      "1000"
+      "10000"
+    ];
+  };
 }
