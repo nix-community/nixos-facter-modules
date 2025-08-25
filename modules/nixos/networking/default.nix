@@ -11,10 +11,9 @@
   };
   config = lib.mkIf config.facter.detected.dhcp.enable {
     networking.useDHCP = lib.mkDefault true;
-    # if we have NetworkManager and also wait-online target enabled,
-    # we should not use systemd-networkd.
+    # Disable networkd when both NetworkManager and wait-online are enabled
     networking.useNetworkd = lib.mkDefault (
-      !(config.networking.networkmanager.enable || config.systemd.network.wait-online.enable)
+      !(config.networking.networkmanager.enable && config.systemd.network.wait-online.enable)
     );
   };
 }
