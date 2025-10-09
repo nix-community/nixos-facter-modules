@@ -4,9 +4,10 @@
   outputs =
     publicInputs:
     let
-      privateInputs = (import ./dev/flake-compat.nix {
-        src = ./dev;
-      }).outputs.inputs;
+      privateInputs =
+        (import ./dev/flake-compat.nix {
+          src = ./dev;
+        }).outputs.inputs;
 
       systems = [
         "aarch64-linux"

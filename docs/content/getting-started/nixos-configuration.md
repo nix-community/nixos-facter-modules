@@ -71,11 +71,11 @@ Taking the `facter.json` file generated in the [previous step](./generate-report
 
 The NixOS Facter module will attempt to do the following:
 
--   Configure `nixpkgs.hostPlatform` based on the [detected architecture].
--   Enable a variety of kernel modules and NixOS options related to VM and bare-metal environments based on the [detected virtualisation].
--   Enable CPU microcode updates based on the [detected CPU(s)].
--   Ensure a variety of kernel modules are made available at boot time based on the [detected (usb|firewire|storage) controllers and disks].
--   Enable a variety of kernel modules based on the [detected Intel WiFi devices].
+- Configure `nixpkgs.hostPlatform` based on the [detected architecture].
+- Enable a variety of kernel modules and NixOS options related to VM and bare-metal environments based on the [detected virtualisation].
+- Enable CPU microcode updates based on the [detected CPU(s)].
+- Ensure a variety of kernel modules are made available at boot time based on the [detected (usb|firewire|storage) controllers and disks].
+- Enable a variety of kernel modules based on the [detected Intel WiFi devices].
 
 !!! info "Roadmap"
 

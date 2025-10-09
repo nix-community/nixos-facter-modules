@@ -27,31 +27,31 @@ let
             }
             // (if info ? narHash then { sha256 = info.narHash; } else { })
           );
-          rev = info.rev;
+          inherit (info) rev;
           shortRev = builtins.substring 0 7 info.rev;
-          lastModified = info.lastModified;
+          inherit (info) lastModified;
           lastModifiedDate = formatSecondsSinceEpoch info.lastModified;
-          narHash = info.narHash;
+          inherit (info) narHash;
         }
       else if info.type == "git" then
         {
           outPath = builtins.fetchGit (
             {
-              url = info.url;
+              inherit (info) url;
             }
             // (if info ? rev then { inherit (info) rev; } else { })
             // (if info ? ref then { inherit (info) ref; } else { })
             // (if info ? submodules then { inherit (info) submodules; } else { })
           );
-          lastModified = info.lastModified;
+          inherit (info) lastModified;
           lastModifiedDate = formatSecondsSinceEpoch info.lastModified;
-          narHash = info.narHash;
+          inherit (info) narHash;
           revCount = info.revCount or 0;
         }
         // (
           if info ? rev then
             {
-              rev = info.rev;
+              inherit (info) rev;
               shortRev = builtins.substring 0 7 info.rev;
             }
           else
@@ -60,10 +60,10 @@ let
       else if info.type == "path" then
         {
           outPath = builtins.path {
-            path = info.path;
+            inherit (info) path;
             sha256 = info.narHash;
           };
-          narHash = info.narHash;
+          inherit (info) narHash;
         }
       else if info.type == "tarball" then
         {
@@ -120,7 +120,7 @@ let
     flakeSrc:
     let
       flake = import (flakeSrc + "/flake.nix");
-      outputs = flakeSrc // (flake.outputs ({ self = outputs; }));
+      outputs = flakeSrc // (flake.outputs { self = outputs; });
     in
     outputs;
 
@@ -265,7 +265,7 @@ let
     if !(builtins.pathExists lockFilePath) then
       callLocklessFlake rootSrc
     else if lockFile.version == 4 then
-      callFlake4 rootSrc (lockFile.inputs)
+      callFlake4 rootSrc lockFile.inputs
     else if lockFile.version >= 5 && lockFile.version <= 7 then
       allNodes.${lockFile.root}
     else
@@ -282,7 +282,7 @@ rec {
     )
     // (
       if result ? packages.${system}.default then
-        { default = result.packages.${system}.default; }
+        { inherit (result.packages.${system}) default; }
       else
         { }
     );
@@ -292,7 +292,7 @@ rec {
     // (if result ? devShell.${system} then { default = result.devShell.${system}; } else { })
     // (
       if result ? devShells.${system}.default then
-        { default = result.devShells.${system}.default; }
+        { inherit (result.devShells.${system}) default; }
       else
         { }
     );
