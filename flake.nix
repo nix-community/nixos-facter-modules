@@ -122,7 +122,7 @@
                     boot.loader.grub.devices = lib.mkForce [ "/dev/sda" ];
                     fileSystems."/".device = lib.mkDefault "/dev/sda";
                     users.users.root.initialPassword = "fnord23";
-                    system.stateVersion = config.system.nixos.version;
+                    system.stateVersion = config.system.nixos.release;
                     nixpkgs.pkgs = pkgs;
                   }
                 )
