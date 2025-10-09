@@ -51,8 +51,11 @@
           }
         );
         formatter = eachSystem (
-          { pkgs, ... }:
-          (pkgs.callPackage ./formatter.nix { inputs = publicInputs // privateInputs; }).config.build.wrapper
+          { pkgs, system, ... }:
+          if system != "riscv64-linux" then
+            (pkgs.callPackage ./formatter.nix { inputs = publicInputs // privateInputs; }).config.build.wrapper
+          else
+            null
         );
 
         packages = eachSystem (
@@ -87,11 +90,13 @@
         );
 
         checks = eachSystem (
-          { pkgs, ... }:
-          {
+          { pkgs, system, ... }:
+          (pkgs.lib.optionalAttrs (system != "riscv64-linux") {
             formatting =
               (pkgs.callPackage ./formatter.nix { inputs = publicInputs // privateInputs; }).config.build.check
                 publicInputs.self;
+          })
+          // {
             lib-tests =
               pkgs.runCommandLocal "lib-tests"
                 {
