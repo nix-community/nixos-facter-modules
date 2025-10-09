@@ -4,17 +4,9 @@
   outputs =
     publicInputs:
     let
-      loadPrivateFlake =
-        path:
-        let
-          flakeHash = builtins.readFile "${toString path}.narHash";
-          flakePath = "path:${toString path}?narHash=${flakeHash}";
-        in
-        builtins.getFlake (builtins.unsafeDiscardStringContext flakePath);
-
-      privateFlake = loadPrivateFlake ./dev/private;
-
-      privateInputs = privateFlake.inputs;
+      privateInputs = (import ./dev/flake-compat.nix {
+        src = ./dev;
+      }).outputs.inputs;
 
       systems = [
         "aarch64-linux"
