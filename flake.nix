@@ -20,6 +20,8 @@
         "aarch64-linux"
         "riscv64-linux"
         "x86_64-linux"
+        "aarch64-darwin"
+        "x86_64-darwin"
       ];
       eachSystem =
         f:
@@ -61,8 +63,8 @@
         );
 
         packages = eachSystem (
-          { pkgs, ... }:
-          {
+          { pkgs, system, ... }:
+          pkgs.lib.optionalAttrs pkgs.stdenv.isLinux {
             fprint-supported-devices = pkgs.libfprint.overrideAttrs (old: {
               nativeBuildInputs = old.nativeBuildInputs or [ ] ++ [
                 pkgs.jq
@@ -84,7 +86,7 @@
             update-fprint-devices = pkgs.writeScriptBin "update-fprint-devices" ''
               #!${pkgs.stdenv.shell}
               target=$(git rev-parse --show-toplevel)/modules/nixos/fingerprint/devices.json
-              cat ${publicInputs.self.packages.${pkgs.system}.fprint-supported-devices} > "$target"
+              cat ${publicInputs.self.packages.${system}.fprint-supported-devices} > "$target"
               nix fmt -- "$target"
               git add -- "$target"
             '';
@@ -97,6 +99,27 @@
             formatting =
               (pkgs.callPackage ./formatter.nix { inputs = publicInputs // privateInputs; }).config.build.check
                 publicInputs.self;
+            lib-tests =
+              pkgs.runCommandLocal "lib-tests"
+                {
+                  nativeBuildInputs = [ pkgs.nix-unit ];
+                }
+                ''
+                  export HOME="$(realpath .)"
+                  export NIX_REMOTE=""
+                  export NIX_STATE_DIR=$TMPDIR/nix/var/nix
+                  export NIX_STORE_DIR=$TMPDIR/nix/store
+                  export NIX_CONFIG='
+                  extra-experimental-features = nix-command flakes
+                  flake-registry = ""
+                  '
+
+                  nix-unit --expr '(import ${publicInputs.self}/lib { lib = import ${privateInputs.nixpkgs}/lib; }).tests'
+
+                  touch $out
+                '';
+          }
+          // pkgs.lib.optionalAttrs pkgs.stdenv.isLinux {
             minimal-machine =
               (pkgs.nixos [
                 publicInputs.self.nixosModules.facter
@@ -111,17 +134,6 @@
                   }
                 )
               ]).config.system.build.toplevel;
-            lib-tests = pkgs.runCommandLocal "lib-tests" { nativeBuildInputs = [ pkgs.nix-unit ]; } ''
-              export HOME="$(realpath .)"
-              export NIX_CONFIG='
-              extra-experimental-features = nix-command flakes
-              flake-registry = ""
-              '
-
-              nix-unit --expr '(import ${publicInputs.self}/lib { lib = import ${privateInputs.nixpkgs}/lib; }).tests'
-
-              touch $out
-            '';
           }
         );
       };
