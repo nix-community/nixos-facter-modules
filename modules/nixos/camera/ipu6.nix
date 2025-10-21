@@ -4,7 +4,7 @@ let
   facterLib = import ../../../lib/lib.nix lib;
 
   isCpuGeneration =
-    family: models:
+    _family: models:
     facterLib.hasIntelCpu report
     && lib.any (
       actual: (actual.family or 0) == 6 && builtins.elem (actual.model or 0) models
