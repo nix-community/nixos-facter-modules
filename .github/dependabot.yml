@@ -1,13 +1,13 @@
 version: 2
 updates:
-  # Monitor GitHub Actions dependencies
-  - package-ecosystem: "github-actions"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-    labels:
-      - "dependencies"
-      - "github-actions"
-    commit-message:
-      prefix: "ci"
-      include: "scope"
+    # Monitor GitHub Actions dependencies
+    - package-ecosystem: "github-actions"
+      directory: "/"
+      schedule:
+          interval: "weekly"
+      labels:
+          - "dependencies"
+          - "github-actions"
+      commit-message:
+          prefix: "ci"
+          include: "scope"
