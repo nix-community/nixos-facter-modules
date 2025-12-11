@@ -13,6 +13,6 @@ in
     };
   };
   config = lib.mkIf cfg.enable {
-    services.xserver.videoDrivers = [ "modesettings" ];
+    services.xserver.videoDrivers = [ "modesetting" ];
   };
 }
