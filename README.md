@@ -1,5 +1,19 @@
 # nixos-facter-modules
 
+> [!WARNING]
+> **This repository is deprecated.** The modules have been upstreamed to nixpkgs.
+> Please use the nixpkgs version instead:
+>
+> ```nix
+> {
+>   hardware.facter.report = ./facter.json;
+> }
+> ```
+>
+> See the [nixpkgs documentation](https://search.nixos.org/options?query=facter) for more details.
+
+---
+
 A series of [NixOS modules] to be used in conjunction with [NixOS Facter].
 
 With a similar goal to [NixOS Hardware], these modules are designed around _fine-grained_ feature detection as opposed to system models.
