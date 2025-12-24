@@ -6,7 +6,7 @@
 >
 > ```nix
 > {
->   hardware.facter.report = ./facter.json;
+>   hardware.facter.reportPath = ./facter.json;
 > }
 > ```
 >
