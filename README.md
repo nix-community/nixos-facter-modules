@@ -49,7 +49,6 @@ that part of the configuration yourself or take it from `nixos-generate-config`.
 {
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixos-facter-modules.url = "github:nix-community/nixos-facter-modules";
   };
 
   outputs =
@@ -58,8 +57,7 @@ that part of the configuration yourself or take it from `nixos-generate-config`.
       nixosConfigurations.basic = nixpkgs.lib.nixosSystem {
 
         modules = [
-          inputs.nixos-facter-modules.nixosModules.facter
-          { config.facter.reportPath = ./facter.json; }
+          { config.hardware.facter.reportPath = ./facter.json; }
           # If you want to test out nixos-facter, you can add these dummy
           # values to make the configuration valid. Note that this likely won't boot if
           # it doesn't match your own partitioning
@@ -82,12 +80,6 @@ that part of the configuration yourself or take it from `nixos-generate-config`.
 ```nix
 # configuration.nix
 {
-  imports = [
-    "${
-      (builtins.fetchTarball { url = "https://github.com/nix-community/nixos-facter-modules/"; })
-    }/modules/nixos/facter.nix"
-  ];
-
-  config.facter.reportPath = ./facter.json;
+  config.hardware.facter.reportPath = ./facter.json;
 }
 ```
